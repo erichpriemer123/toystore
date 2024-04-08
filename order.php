@@ -25,8 +25,20 @@
 		/*
 		 * TO-DO: Retrieve info about order from the db using provided PDO connection
 		 */
+			
+		$sql = "SELECT * 
+				FROM customer c 
+				JOIN orders o 
+				ON c.custnum = o.custnum 
+				WHERE c.email=:email AND o.ordernum=:orderNum;";
+		
+
+		$toy_order = pdo($pdo, $sql, ['email' => $email,'orderNum' => $orderNum])->fetch();
+		
 		
 	}
+
+	
 // Closing PHP tag  ?> 
 
 <!DOCTYPE>
@@ -89,19 +101,19 @@
 				  -- TO-DO: Check if variable holding order is not empty. Make sure to replace null with your variable!
 				  -->
 				
-				<?php if (!empty(null)): ?>
+				<?php if (!empty($toy_order)): ?>
 					<div class="order-details">
 
 						<!-- 
 				  		  -- TO DO: Fill in ALL the placeholders for this order from the db
   						  -->
 						<h1>Order Details</h1>
-						<p><strong>Name: </strong> <?= '' ?></p>
-				        	<p><strong>Username: </strong> <?= '' ?></p>
-				        	<p><strong>Order Number: </strong> <?= '' ?></p>
-				        	<p><strong>Quantity: </strong> <?= '' ?></p>
-				        	<p><strong>Date Ordered: </strong> <?= '' ?></p>
-				        	<p><strong>Delivery Date: </strong> <?= '' ?></p>
+						<p><strong>Name: </strong> <?= $toy_order['cname'] ?></p>
+				        	<p><strong>Username: </strong> <?= $toy_order['username'] ?></p>
+				        	<p><strong>Order Number: </strong> <?= $toy_order['custnum'] ?></p>
+				        	<p><strong>Quantity: </strong> <?= $toy_order['quantity'] ?></p>
+				        	<p><strong>Date Ordered: </strong> <?= $toy_order['date_ordered'] ?></p>
+				        	<p><strong>Delivery Date: </strong> <?= $toy_order['date_deliv'] ?></p>
 				      
 					</div>
 				<?php endif; ?>
